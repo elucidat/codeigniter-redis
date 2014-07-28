@@ -39,6 +39,14 @@ class CI_Redis {
 	public $debug = FALSE;
 
 	/**
+	 * Has 
+	 *
+	 * Whether there is a Redis server there
+	 * @var		bool
+	 */
+	public $has_connection = FALSE;
+
+	/**
 	 * CRLF
 	 *
 	 * User to delimiter arguments in the Redis unified request protocol
@@ -82,10 +90,8 @@ class CI_Redis {
 		$this->_connection = @fsockopen($config['host'], $config['port'], $errno, $errstr, 3);
 
 		// Display an error message if connection failed
-		if ( ! $this->_connection)
-		{
-			show_error('Could not connect to Redis at ' . $config['host'] . ':' . $config['port']);
-		}
+		if ($this->_connection)
+			$this->has_connection = true;
 
 		// Authenticate when needed
 		$this->_auth($config['password']);
