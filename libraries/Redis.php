@@ -28,7 +28,7 @@ class CI_Redis {
 	 * Socket handle to the Redis server
 	 * @var		handle
 	 */
-	private $_connection;
+	private $_connection = FALSE;
 
 	/**
 	 * Debug
@@ -39,7 +39,7 @@ class CI_Redis {
 	public $debug = FALSE;
 
 	/**
-	 * Has 
+	 * Marker to show if there is a Redis server 
 	 *
 	 * Whether there is a Redis server there
 	 * @var		bool
@@ -90,11 +90,12 @@ class CI_Redis {
 		$this->_connection = @fsockopen($config['host'], $config['port'], $errno, $errstr, 3);
 
 		// Display an error message if connection failed
-		if ($this->_connection)
-			$this->has_connection = true;
+		if ($this->_connection) {
+			$this->has_connection = TRUE;
 
-		// Authenticate when needed
-		$this->_auth($config['password']);
+			// Authenticate when needed
+			$this->_auth($config['password']);
+		}
 
 	}
 
